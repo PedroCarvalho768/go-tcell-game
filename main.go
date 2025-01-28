@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/gdamore/tcell/v2"
 	"log"
 	"math/rand"
 	"time"
-	"github.com/gdamore/tcell/v2"
 )
 
 const tick = time.Second
@@ -13,7 +13,7 @@ const tick = time.Second
 var ticker *time.Ticker
 
 func randRange(min, max int) int {
-  return rand.Intn(max-min) + min
+	return rand.Intn(max-min) + min
 }
 
 func drawString(screen tcell.Screen, x, y int, msg string) {
@@ -25,7 +25,7 @@ func drawString(screen tcell.Screen, x, y int, msg string) {
 func setupCoins(level int) []*Sprite {
 	coins := make([]*Sprite, level+2)
 	for i := range level + 2 {
-    coins[i] = NewSprite('O', rand.Intn(20), randRange(4, 30))
+		coins[i] = NewSprite('O', rand.Intn(20), randRange(4, 30))
 	}
 	return coins
 }
@@ -48,20 +48,20 @@ func main() {
 	player := NewSprite('@', 10, 10)
 	coins := setupCoins(1)
 
-  timeLeft := 10
+	timeLeft := 10
 	score := 0
 	level := 1
 
-  ticker = time.NewTicker(time.Second)
+	ticker = time.NewTicker(time.Second)
 
-  go func(){
-    for{
-      select{
-      case <-ticker.C:
-        timeLeft--
-      }
-    }
-  }()
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				timeLeft--
+			}
+		}
+	}()
 
 	// game loop
 	running := true
@@ -79,8 +79,8 @@ func main() {
 		// UI
 		drawString(screen, 1, 1, "GRAB ALL THE COINS")
 		drawString(screen, 1, 2, fmt.Sprintf("TIME LEFT: %d", timeLeft))
-    drawString(screen, 1, 3, fmt.Sprintf("Score: %d", score))
-    drawString(screen, 1, 4, fmt.Sprintf("Level: %d", level))
+		drawString(screen, 1, 3, fmt.Sprintf("Score: %d", score))
+		drawString(screen, 1, 4, fmt.Sprintf("Level: %d", level))
 
 		//___________________________________________
 		screen.Show()
@@ -114,12 +114,12 @@ func main() {
 			}
 		}
 
-    // end
-    if timeLeft == 0 {
-      fmt.Println("YOU LOSE")
-      fmt.Printf("Your score was: %d", score)
-      running = false
-    }
+		// end
+		if timeLeft == 0 {
+			fmt.Println("YOU LOSE")
+			fmt.Printf("Your score was: %d", score)
+			running = false
+		}
 
 		// check for coin collisions
 		if playerMoved {
